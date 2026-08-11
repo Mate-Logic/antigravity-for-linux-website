@@ -6,7 +6,10 @@ import InstallModal from '../components/InstallModal.astro';
 import Toast from '../components/Toast.astro';
 ---
 
-<Layout title="Antigravity for Linux — AppImage & Package Downloads">
+<Layout
+  title="Antigravity for Linux - AppImage and IDE Downloads"
+  description="Download Antigravity for Linux as a portable AppImage or install the official CLI. Community-maintained Linux downloads for Ubuntu, Debian, Fedora, and Arch."
+>
   <div class="min-h-screen bg-[#08080a] flex flex-col">
     <!-- Main Sticky Header Navigation -->
     <Header />
@@ -31,7 +34,8 @@ import Toast from '../components/Toast.astro';
       </section>
 
       <!-- Section: Segmented Responsive Product Cards Grid -->
-      <section class="space-y-6">
+      <section class="space-y-6" aria-labelledby="downloads-heading">
+        <h2 id="downloads-heading" class="sr-only">Antigravity Linux downloads</h2>
         <DownloadTable />
       </section>
 

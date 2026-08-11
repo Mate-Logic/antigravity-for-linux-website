@@ -7,29 +7,53 @@ interface Props {
 }
 
 const {
-  title = "Antigravity for Linux — Descargas Oficiales y Repositorios",
-  description = "Descarga oficial de Antigravity AI Assistant para distribuciones Linux (Ubuntu, Debian, Fedora, Arch, AppImage). Instalación rápida, firmas GPG y repositorios."
+  title = "Antigravity for Linux - AppImage and IDE Downloads",
+  description = "Download Antigravity for Linux as a portable AppImage or install the official CLI. Community-maintained Linux downloads for Ubuntu, Debian, Fedora, and Arch."
 } = Astro.props;
+
+const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
+const socialImage = new URL('images/Google-Antigravity-Icon-Full-Color.png', siteUrl).href;
 ---
 
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}images/Antigravity_CLI.svg`} />
     <link rel="shortcut icon" href={`${import.meta.env.BASE_URL}images/Antigravity_CLI.svg`} />
     <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}images/Antigravity_CLI.svg`} />
     <meta name="generator" content={Astro.generator} />
+    <meta name="google-site-verification" content="sdgYp-94JirCIWiCj6KU_D03toF4WcNcmhS3HO6T0CE" />
+    <link rel="canonical" href={siteUrl} />
 
     <!-- SEO Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="keywords" content="Antigravity, Linux, AI, IDE, Assistant, deb, rpm, AppImage, Arch Linux, AUR, Ubuntu, Fedora" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#08080a" />
+    <meta name="author" content="Mate-Logic" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:site_name" content="Antigravity for Linux" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="Antigravity for Linux" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Antigravity for Linux',
+      url: siteUrl,
+      description,
+      inLanguage: 'en',
+    })} />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
