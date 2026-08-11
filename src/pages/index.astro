@@ -106,35 +106,21 @@ import Toast from '../components/Toast.astro';
         let commandsHTML = '';
         let downloadFile = 'Antigravity-1.4.0-x86_64.AppImage';
 
-        if (format === 'appimage') {
-          titleText = 'Downloading Antigravity-1.4.0-x86_64.AppImage';
-          downloadFile = 'Antigravity-1.4.0-x86_64.AppImage';
+        if (format === 'appimage-2') {
+          titleText = 'Downloading Antigravity-2.0-Desktop-Agent-x86_64.AppImage';
+          downloadFile = 'Antigravity-2.0-Desktop-Agent-x86_64.AppImage';
           commandsHTML = `
-            <p class="text-zinc-500"># Make executable and run</p>
-            <p>chmod +x Antigravity-1.4.0-x86_64.AppImage</p>
-            <p>./Antigravity-1.4.0-x86_64.AppImage</p>
+            <p class="text-zinc-500"># Make executable and run Antigravity 2.0 Desktop Agent</p>
+            <p>chmod +x Antigravity-2.0-Desktop-Agent-x86_64.AppImage</p>
+            <p>./Antigravity-2.0-Desktop-Agent-x86_64.AppImage</p>
           `;
-        } else if (format === 'deb') {
-          titleText = 'Downloading antigravity_1.4.0_amd64.deb';
-          downloadFile = 'antigravity_1.4.0_amd64.deb';
+        } else if (format === 'appimage-ide' || format === 'appimage') {
+          titleText = 'Downloading Antigravity-IDE-1.4.0-x86_64.AppImage';
+          downloadFile = 'Antigravity-IDE-1.4.0-x86_64.AppImage';
           commandsHTML = `
-            <p class="text-zinc-500"># Install .deb package in Debian / Ubuntu</p>
-            <p>sudo dpkg -i antigravity_1.4.0_amd64.deb</p>
-          `;
-        } else if (format === 'rpm') {
-          titleText = 'Downloading antigravity-1.4.0.x86_64.rpm';
-          downloadFile = 'antigravity-1.4.0.x86_64.rpm';
-          commandsHTML = `
-            <p class="text-zinc-500"># Install .rpm package in Fedora / RHEL</p>
-            <p>sudo dnf install ./antigravity-1.4.0.x86_64.rpm</p>
-          `;
-        } else if (format === 'tar') {
-          titleText = 'Downloading antigravity-1.4.0-linux-x64.tar.gz';
-          downloadFile = 'antigravity-1.4.0-linux-x64.tar.gz';
-          commandsHTML = `
-            <p class="text-zinc-500"># Extract official Google binary tarball</p>
-            <p>tar -xzf antigravity-1.4.0-linux-x64.tar.gz</p>
-            <p>./antigravity/bin/antigravity</p>
+            <p class="text-zinc-500"># Make executable and run Antigravity IDE</p>
+            <p>chmod +x Antigravity-IDE-1.4.0-x86_64.AppImage</p>
+            <p>./Antigravity-IDE-1.4.0-x86_64.AppImage</p>
           `;
         }
 
