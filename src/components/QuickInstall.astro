@@ -1,0 +1,88 @@
+---
+// QuickInstall.astro - Comandos de instalación directa desde la terminal
+---
+
+<div class="space-y-6">
+  <div>
+    <h2 class="text-xl font-semibold text-white tracking-tight">Instalación Rápida desde Terminal</h2>
+    <p class="text-xs text-zinc-400 mt-1">
+      Instala Antigravity en segundos ejecutando el script oficial verificado desde tu terminal Linux.
+    </p>
+  </div>
+
+  <!-- Primary One-Liner Box -->
+  <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] p-6 space-y-4 shadow-xl">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2 text-xs font-mono text-zinc-300">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+        <span class="font-semibold text-white">Automated Install Script (Recomendado)</span>
+      </div>
+      <span class="text-[10px] text-zinc-500 font-mono">POSIX Compatible (bash / zsh)</span>
+    </div>
+
+    <div class="relative group">
+      <pre class="bg-[#050507] border border-zinc-800/90 rounded-md p-4 font-mono text-xs text-blue-400 overflow-x-auto select-all flex items-center justify-between"><code>curl -fsSL https://antigravity-linux.org/install.sh | bash</code></pre>
+
+      <button 
+        data-copy="install-script"
+        data-text="curl -fsSL https://antigravity-linux.org/install.sh | bash"
+        class="copy-btn absolute right-3 top-2.5 bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-sans font-medium px-3 py-1.5 rounded transition-all shadow-md active:scale-95 flex items-center space-x-1.5"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002-2V7a2 2 0 002-2h2m0 0h2a2 2 0 012 2v1h-4V7a2 2 0 012-2zm2 5h4m-4 4h4m-4 4h4"></path>
+        </svg>
+        <span>Copiar Comando</span>
+      </button>
+    </div>
+
+    <div class="text-[11px] text-zinc-500 space-y-1">
+      <p>• El script detecta automáticamente tu distribución (Debian, Fedora, Arch, Alpine, etc.) y arquitectura.</p>
+      <p>• Verifica la firma GPG antes de extraer los binarios ejecutables en <code class="text-zinc-400 bg-zinc-900 px-1 py-0.5 rounded">~/.local/bin/antigravity</code>.</p>
+    </div>
+  </div>
+
+  <!-- Distribution Specific Terminal Commands -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Ubuntu / Debian PPA -->
+    <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] p-5 space-y-3">
+      <div class="flex items-center justify-between text-xs">
+        <span class="font-semibold text-zinc-100">Ubuntu / Debian (APT Repo)</span>
+        <span class="text-[10px] text-zinc-500 font-mono">apt</span>
+      </div>
+      <div class="bg-[#050507] border border-zinc-800/90 rounded p-3 font-mono text-[11px] text-zinc-300 space-y-1">
+        <p class="text-zinc-500"># Añadir repositorio oficial</p>
+        <p class="text-emerald-400">sudo mkdir -p /etc/apt/keyrings</p>
+        <p class="text-emerald-400">curl -fsSL https://antigravity-linux.org/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg</p>
+        <p class="text-emerald-400">echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://antigravity-linux.org/apt stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list</p>
+        <p class="text-emerald-400">sudo apt update && sudo apt install antigravity</p>
+      </div>
+      <button 
+        data-copy="apt-cmd"
+        data-text="sudo mkdir -p /etc/apt/keyrings && curl -fsSL https://antigravity-linux.org/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg && echo 'deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://antigravity-linux.org/apt stable main' | sudo tee /etc/apt/sources.list.d/antigravity.list && sudo apt update && sudo apt install antigravity"
+        class="copy-btn w-full text-center py-1.5 text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded transition-colors"
+      >
+        Copiar Comandos APT 📋
+      </button>
+    </div>
+
+    <!-- Fedora / RHEL DNF -->
+    <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] p-5 space-y-3">
+      <div class="flex items-center justify-between text-xs">
+        <span class="font-semibold text-zinc-100">Fedora / RHEL (DNF Repo)</span>
+        <span class="text-[10px] text-zinc-500 font-mono">dnf</span>
+      </div>
+      <div class="bg-[#050507] border border-zinc-800/90 rounded p-3 font-mono text-[11px] text-zinc-300 space-y-1">
+        <p class="text-zinc-500"># Importar repo DNF</p>
+        <p class="text-blue-400">sudo dnf config-manager --add-repo https://antigravity-linux.org/rpm/antigravity.repo</p>
+        <p class="text-blue-400">sudo dnf install antigravity</p>
+      </div>
+      <button 
+        data-copy="dnf-cmd"
+        data-text="sudo dnf config-manager --add-repo https://antigravity-linux.org/rpm/antigravity.repo && sudo dnf install antigravity"
+        class="copy-btn w-full text-center py-1.5 text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded transition-colors"
+      >
+        Copiar Comandos DNF 📋
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+---
+// Toast.astro - Mensaje emergente flotante para la confirmación de copia al portapapeles
+---
+
+<div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-12 opacity-0 transition-all duration-300 pointer-events-none">
+  <div class="bg-zinc-900 border border-zinc-700 text-zinc-100 text-xs px-4 py-2.5 rounded-lg shadow-2xl flex items-center space-x-2.5">
+    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
+    <span id="toast-message" class="font-medium">¡Copiado al portapapeles!</span>
+  </div>
+</div>

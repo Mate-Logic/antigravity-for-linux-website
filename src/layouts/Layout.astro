@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Antigravity for Linux — Descargas Oficiales y Repositorios",
+  description = "Descarga oficial de Antigravity AI Assistant para distribuciones Linux (Ubuntu, Debian, Fedora, Arch, AppImage). Instalación rápida, firmas GPG y repositorios."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/images/Antigravity_CLI.svg" />
+    <link rel="shortcut icon" href="/images/Antigravity_CLI.svg" />
+    <link rel="apple-touch-icon" href="/images/Antigravity_CLI.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="Antigravity, Linux, AI, IDE, Assistant, deb, rpm, AppImage, Arch Linux, AUR, Ubuntu, Fedora" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#08080a] text-zinc-300 min-h-screen selection:bg-blue-600 selection:text-white antialiased">
+    <slot />
+  </body>
+</html>

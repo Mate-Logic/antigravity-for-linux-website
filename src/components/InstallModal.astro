@@ -1,0 +1,53 @@
+---
+// InstallModal.astro - Modal interactivo con guías de instalación rápida y simulación de descarga
+---
+
+<div id="install-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+  <div class="bg-[#0c0c0e] border border-zinc-800 rounded-xl w-full max-w-lg overflow-hidden shadow-2xl space-y-0 transform transition-all">
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b border-zinc-800 flex items-center justify-between bg-[#08080a]">
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-ping"></span>
+        <h3 id="modal-title" class="font-semibold text-white text-sm">Descargando Antigravity v1.4.0</h3>
+      </div>
+      <button id="modal-close" class="text-zinc-500 hover:text-white text-lg transition-colors">&times;</button>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="p-6 space-y-4 text-xs text-zinc-300">
+      <div class="bg-blue-950/40 border border-blue-800/40 p-3.5 rounded-lg flex items-start space-x-3">
+        <svg class="w-5 h-5 text-blue-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <div>
+          <p class="font-medium text-blue-200">¡Tu descarga ha comenzado automáticamente!</p>
+          <p class="text-[11px] text-blue-300/80 mt-0.5">Si la descarga no inicia, haz clic en el botón de abajo.</p>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <label class="text-zinc-400 font-mono text-[11px] uppercase">Comandos de Instalación para tu Terminal:</label>
+        <div id="modal-commands" class="bg-[#050507] border border-zinc-800/90 rounded p-3 font-mono text-[11px] text-emerald-400 overflow-x-auto space-y-1">
+          <p class="text-zinc-500"># Instalar archivo .deb en Debian / Ubuntu</p>
+          <p>sudo dpkg -i antigravity_1.4.0_amd64.deb</p>
+          <p class="text-zinc-500"># Corregir dependencias en caso necesario</p>
+          <p>sudo apt-get install -f</p>
+        </div>
+      </div>
+
+      <div class="border-t border-zinc-800/60 pt-4 flex items-center justify-between">
+        <a 
+          id="direct-download-link" 
+          href="#" 
+          class="bg-blue-600 hover:bg-blue-500 text-white font-medium px-4 py-2 rounded text-xs transition-colors shadow-sm"
+          download
+        >
+          Descargar Directamente ↗
+        </a>
+        <button id="modal-done-btn" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 px-4 py-2 rounded text-xs transition-colors">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

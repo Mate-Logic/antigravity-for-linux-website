@@ -1,0 +1,92 @@
+---
+// CompatibilityMatrix.astro - Matriz de compatibilidad de distribuciones y kernel Linux
+---
+
+<div class="space-y-6">
+  <div>
+    <h2 class="text-xl font-semibold text-white tracking-tight">Matriz de Compatibilidad Linux</h2>
+    <p class="text-xs text-zinc-400 mt-1">
+      Estado de soporte verificado para las principales familias de distribuciones Linux y servidores de despliegue.
+    </p>
+  </div>
+
+  <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] overflow-hidden">
+    <table class="w-full text-left text-xs text-zinc-300">
+      <thead class="bg-[#08080a] border-b border-zinc-800/80 text-[10px] uppercase font-mono tracking-wider text-zinc-500">
+        <tr>
+          <th scope="col" class="py-3 px-5">DISTRIBUCIÓN LINUX</th>
+          <th scope="col" class="py-3 px-5">VERSIÓN MÍNIMA</th>
+          <th scope="col" class="py-3 px-5">ARQUITECTURA</th>
+          <th scope="col" class="py-3 px-5">DISPLAY SERVER</th>
+          <th scope="col" class="py-3 px-5 text-right">ESTADO</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-zinc-800/60 font-mono text-[11px]">
+        <tr class="hover:bg-zinc-900/40">
+          <td class="py-3.5 px-5 font-sans font-medium text-white">Ubuntu / Pop!_OS</td>
+          <td class="py-3.5 px-5 text-zinc-400">20.04 LTS +</td>
+          <td class="py-3.5 px-5 text-zinc-400">x86_64, arm64</td>
+          <td class="py-3.5 px-5 text-zinc-400">Wayland & X11</td>
+          <td class="py-3.5 px-5 text-right">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">Soportado Oficialmente</span>
+          </td>
+        </tr>
+        <tr class="hover:bg-zinc-900/40">
+          <td class="py-3.5 px-5 font-sans font-medium text-white">Debian GNU/Linux</td>
+          <td class="py-3.5 px-5 text-zinc-400">Debian 11 (Bullseye) +</td>
+          <td class="py-3.5 px-5 text-zinc-400">x86_64, arm64</td>
+          <td class="py-3.5 px-5 text-zinc-400">Wayland & X11</td>
+          <td class="py-3.5 px-5 text-right">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">Soportado Oficialmente</span>
+          </td>
+        </tr>
+        <tr class="hover:bg-zinc-900/40">
+          <td class="py-3.5 px-5 font-sans font-medium text-white">Fedora Workstation</td>
+          <td class="py-3.5 px-5 text-zinc-400">Fedora 37 +</td>
+          <td class="py-3.5 px-5 text-zinc-400">x86_64, arm64</td>
+          <td class="py-3.5 px-5 text-zinc-400">Wayland Native</td>
+          <td class="py-3.5 px-5 text-right">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">Soportado Oficialmente</span>
+          </td>
+        </tr>
+        <tr class="hover:bg-zinc-900/40">
+          <td class="py-3.5 px-5 font-sans font-medium text-white">Arch Linux / Manjaro</td>
+          <td class="py-3.5 px-5 text-zinc-400">Rolling Release</td>
+          <td class="py-3.5 px-5 text-zinc-400">x86_64</td>
+          <td class="py-3.5 px-5 text-zinc-400">Wayland & X11</td>
+          <td class="py-3.5 px-5 text-right">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">Soportado (AUR)</span>
+          </td>
+        </tr>
+        <tr class="hover:bg-zinc-900/40">
+          <td class="py-3.5 px-5 font-sans font-medium text-white">Alpine Linux (musl)</td>
+          <td class="py-3.5 px-5 text-zinc-400">3.18 +</td>
+          <td class="py-3.5 px-5 text-zinc-400">x86_64, arm64</td>
+          <td class="py-3.5 px-5 text-zinc-400">CLI / Headless</td>
+          <td class="py-3.5 px-5 text-right">
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-amber-950/60 text-amber-400 border border-amber-800/40">Binario Tarball</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Hardware Requirements -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+    <div class="border border-zinc-800/80 bg-[#0c0c0e] p-4 rounded-lg space-y-1">
+      <div class="text-zinc-500 font-mono text-[10px] uppercase">Kernel Linux</div>
+      <div class="text-white font-semibold font-mono text-sm">v5.15 LTS o superior</div>
+      <div class="text-zinc-400 text-[11px]">Soporte para eBPF y cgroups v2.</div>
+    </div>
+    <div class="border border-zinc-800/80 bg-[#0c0c0e] p-4 rounded-lg space-y-1">
+      <div class="text-zinc-500 font-mono text-[10px] uppercase">Memoria RAM</div>
+      <div class="text-white font-semibold font-mono text-sm">2 GB Mínimo (4 GB Recomendado)</div>
+      <div class="text-zinc-400 text-[11px]">Uso optimizado de memoria en ejecuciones paralelas.</div>
+    </div>
+    <div class="border border-zinc-800/80 bg-[#0c0c0e] p-4 rounded-lg space-y-1">
+      <div class="text-zinc-500 font-mono text-[10px] uppercase">Librerías C</div>
+      <div class="text-white font-semibold font-mono text-sm">glibc >= 2.31</div>
+      <div class="text-zinc-400 text-[11px]">Compatibilidad estándar POSIX Linux.</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+---
+// RepositoriosSection.astro - Guía completa de repositorios para distribuciones Linux
+---
+
+<div class="space-y-6">
+  <div>
+    <h2 class="text-xl font-semibold text-white tracking-tight">Repositorios Oficiales</h2>
+    <p class="text-xs text-zinc-400 mt-1">
+      Mantén Antigravity siempre actualizado mediante los repositorios oficiales de paquetes de tu distribución.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4">
+    <!-- Debian / Ubuntu Repository Card -->
+    <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-red-500"></span>
+          <h3 class="text-sm font-semibold text-white">APT (Debian / Ubuntu / Mint / Pop!_OS)</h3>
+        </div>
+        <span class="text-[10px] text-zinc-500 font-mono">https://antigravity-linux.org/apt</span>
+      </div>
+
+      <p class="text-xs text-zinc-400">
+        Agrega la clave GPG pública e incluye el archivo de lista de orígenes en <code class="text-zinc-300 bg-zinc-900 px-1 py-0.5 rounded">/etc/apt/sources.list.d/</code>.
+      </p>
+
+      <div class="bg-[#050507] border border-zinc-800/90 rounded p-3 font-mono text-[11px] text-zinc-300 space-y-1 overflow-x-auto">
+        <p class="text-zinc-500"># Registrar clave GPG del repositorio</p>
+        <p class="text-emerald-400">curl -fsSL https://antigravity-linux.org/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity.gpg</p>
+        <p class="text-zinc-500"># Agregar repositorio estable</p>
+        <p class="text-emerald-400">echo "deb [signed-by=/etc/apt/keyrings/antigravity.gpg] https://antigravity-linux.org/apt stable main" | sudo tee /etc/apt/sources.list.d/antigravity.list</p>
+        <p class="text-zinc-500"># Actualizar e instalar</p>
+        <p class="text-emerald-400">sudo apt update && sudo apt install antigravity</p>
+      </div>
+    </div>
+
+    <!-- Fedora / RHEL Repository Card -->
+    <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-blue-500"></span>
+          <h3 class="text-sm font-semibold text-white">DNF / YUM (Fedora / RHEL / Rocky / CentOS)</h3>
+        </div>
+        <span class="text-[10px] text-zinc-500 font-mono">https://antigravity-linux.org/rpm</span>
+      </div>
+
+      <div class="bg-[#050507] border border-zinc-800/90 rounded p-3 font-mono text-[11px] text-zinc-300 space-y-1 overflow-x-auto">
+        <p class="text-zinc-500"># Descargar archivo .repo</p>
+        <p class="text-blue-400">sudo dnf config-manager --add-repo https://antigravity-linux.org/rpm/antigravity.repo</p>
+        <p class="text-zinc-500"># Instalar paquete</p>
+        <p class="text-blue-400">sudo dnf install antigravity</p>
+      </div>
+    </div>
+
+    <!-- Arch Linux AUR Card -->
+    <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] p-5 space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="w-3 h-3 rounded-full bg-cyan-500"></span>
+          <h3 class="text-sm font-semibold text-white">AUR (Arch Linux / Manjaro / EndeavourOS)</h3>
+        </div>
+        <span class="text-[10px] text-zinc-500 font-mono">aur.archlinux.org/packages/antigravity-bin</span>
+      </div>
+
+      <div class="bg-[#050507] border border-zinc-800/90 rounded p-3 font-mono text-[11px] text-zinc-300 space-y-1 overflow-x-auto">
+        <p class="text-zinc-500"># Instalación con helper yay</p>
+        <p class="text-cyan-400">yay -S antigravity-bin</p>
+        <p class="text-zinc-500"># O con paru</p>
+        <p class="text-cyan-400">paru -S antigravity-bin</p>
+      </div>
+    </div>
+  </div>
+</div>
