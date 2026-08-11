@@ -1,16 +1,32 @@
 ---
-// Header.astro - Encabezado principal simplificado
+// Header.astro - Encabezado principal con selector de idioma EN / ES
 ---
 
 <header class="border-b border-zinc-800/80 bg-[#08080a] sticky top-0 z-40 backdrop-blur-md bg-opacity-90">
   <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
     <!-- Brand & Logo -->
-    <div class="flex items-center space-x-3">
-      <img src="/images/Antigravity_CLI.svg" alt="Antigravity CLI Logo" class="w-9 h-9 object-contain drop-shadow-md" />
+    <a href="/" class="flex items-center space-x-3 group">
+      <img src="/images/Antigravity_CLI.svg" alt="Antigravity CLI Logo" class="w-9 h-9 object-contain drop-shadow-md group-hover:scale-105 transition-transform" />
       <div class="flex items-center space-x-2">
         <span class="font-bold text-white text-lg tracking-tight">Antigravity</span>
         <span class="text-xs text-blue-400 font-mono bg-blue-950/60 border border-blue-800/40 px-2 py-0.5 rounded">Linux</span>
       </div>
+    </a>
+
+    <!-- Language Toggle Switcher (EN / ES) -->
+    <div class="flex items-center space-x-1.5 bg-zinc-900/90 border border-zinc-800 p-1 rounded-lg text-xs font-mono select-none">
+      <button 
+        id="lang-btn-en" 
+        class="lang-btn active px-2.5 py-1 rounded-md transition-all font-semibold bg-blue-600 text-white shadow-sm"
+      >
+        EN
+      </button>
+      <button 
+        id="lang-btn-es" 
+        class="lang-btn px-2.5 py-1 rounded-md transition-all text-zinc-400 hover:text-white"
+      >
+        ES
+      </button>
     </div>
   </div>
 </header>

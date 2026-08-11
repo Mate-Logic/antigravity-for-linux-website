@@ -6,51 +6,48 @@ import InstallModal from '../components/InstallModal.astro';
 import Toast from '../components/Toast.astro';
 ---
 
-<Layout title="Antigravity for Linux — AppImage & Linux Packages (Unofficial)">
+<Layout title="Antigravity for Linux — AppImage & Package Downloads">
   <div class="min-h-screen bg-[#08080a] flex flex-col">
     <!-- Main Sticky Header Navigation -->
     <Header />
 
-    <!-- Main Content Body (Focused purely on downloads) -->
-    <main class="flex-1 max-w-5xl w-full mx-auto px-6 py-10 space-y-10">
+    <!-- Main Content Body -->
+    <main class="flex-1 max-w-6xl w-full mx-auto px-6 py-10 space-y-12">
       
       <!-- Hero Banner Section -->
       <section class="text-center py-6 space-y-4 border-b border-zinc-900 pb-10">
-        <div class="inline-flex items-center space-x-2 bg-amber-950/40 border border-amber-800/40 px-3 py-1 rounded-full text-xs text-amber-300">
-          <img src="/images/Antigravity_CLI.svg" alt="Antigravity CLI Logo" class="w-4 h-4 object-contain" />
-          <span>Proyecto No Oficial • Descargas AppImage para Linux</span>
+        <div class="inline-flex items-center space-x-2 bg-amber-950/40 border border-amber-800/40 px-3.5 py-1.5 rounded-full text-xs text-amber-300">
+          <img src="/images/Antigravity_CLI.svg" alt="Antigravity Logo" class="w-4 h-4 object-contain" />
+          <span data-i18n="hero-badge">Unofficial Community Downloads • Linux (x86_64)</span>
         </div>
         
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight" data-i18n="hero-title">
           Antigravity for Linux
         </h1>
 
-        <p class="text-sm text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          Publicación comunitaria no oficial de paquetes <span class="text-zinc-200 font-semibold">AppImage</span> y binarios para distribuciones Linux, empaquetados directamente a partir de las versiones <code class="text-blue-300 bg-blue-950/60 px-1 py-0.5 rounded">.tar.gz</code> oficiales distribuidas por Google.
+        <p class="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed" data-i18n="hero-subtitle">
+          Community distribution of portable AppImage packages for Linux, built directly from official Google Linux releases.
         </p>
       </section>
 
-      <!-- Section 1: Main Download Packages Table -->
+      <!-- Section: Segmented Responsive Product Cards Grid -->
       <section class="space-y-6">
         <DownloadTable />
       </section>
 
     </main>
 
-    <!-- Clean Footer with Disclaimer and English language default -->
+    <!-- Clean Footer with Disclaimer and Language Selector -->
     <footer class="border-t border-zinc-900 bg-[#060608] py-8 text-xs text-zinc-500 font-mono mt-auto">
-      <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <!-- Unofficial Disclaimer -->
-        <p class="text-[11px] text-zinc-500 max-w-xl">
-          Disclaimer: This is an unofficial community site. Antigravity IDE and trademarks belong to Google LLC. Packages provided here are AppImage builds based on official Linux tar.gz releases distributed by Google.
+        <p class="text-[11px] text-zinc-500 max-w-2xl text-center md:text-left leading-relaxed" data-i18n="disclaimer">
+          Disclaimer: This is an unofficial community project. Antigravity IDE and trademarks belong to Google LLC. Desktop AppImage packages provided here are built from official Linux releases distributed by Google.
         </p>
 
-        <!-- Language Selector defaulted to English -->
-        <div class="flex items-center space-x-2 cursor-pointer hover:text-zinc-300 transition-colors shrink-0">
-          <span class="text-zinc-300 font-sans font-medium">English</span>
-          <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
+        <!-- Footer Language Indicator -->
+        <div class="flex items-center space-x-2 shrink-0 bg-zinc-900/60 border border-zinc-800 px-3 py-1.5 rounded-lg">
+          <span class="text-zinc-400 font-sans font-medium" data-i18n="lang-indicator">Language: English</span>
         </div>
       </div>
     </footer>
@@ -60,16 +57,112 @@ import Toast from '../components/Toast.astro';
     <Toast />
   </div>
 
-  <!-- Interactive Client-side Scripting -->
+  <!-- Client-side i18n & Interactive Logic -->
   <script>
+    // Translation Dictionary (EN & ES)
+    const translations: Record<string, Record<string, string>> = {
+      en: {
+        'hero-badge': 'Unofficial Community Downloads • Linux (x86_64)',
+        'hero-title': 'Antigravity for Linux',
+        'hero-subtitle': 'Community distribution of portable AppImage packages for Linux, built directly from official Google Linux releases.',
+        'disclaimer': 'Disclaimer: This is an unofficial community project. Antigravity IDE and trademarks belong to Google LLC. Desktop AppImage packages provided here are built from official Linux releases distributed by Google.',
+        'lang-indicator': 'Language: English',
+        
+        // Cards
+        'v2-tag': 'Desktop Agent',
+        'recommended': 'Recommended',
+        'v2-desc': 'Standalone AI desktop agent application (Non-IDE) for Linux. Instant native execution in 64-bit portable AppImage format.',
+        'v2-btn': 'Download AppImage 2.0 (x64)',
+        
+        'ide-tag': 'Full IDE',
+        'ide-desc': 'Complete development environment for Linux packaged as a 64-bit portable AppImage derived from official releases.',
+        'ide-btn': 'Download AppImage IDE (x64)',
+
+        'cli-tag': 'Official Google',
+        'cli-desc': 'Official command-line interface for Linux. Direct installation via official Google script.',
+        'cli-cmd-label': 'Terminal Command:',
+        'cli-btn': 'Copy Command',
+
+        'format-label': 'Format:',
+        'sha256-label': 'SHA-256:',
+        'copied': 'Copied to clipboard!'
+      },
+      es: {
+        'hero-badge': 'Descargas Comunitarias No Oficiales • Linux (x86_64)',
+        'hero-title': 'Antigravity para Linux',
+        'hero-subtitle': 'Publicación comunitaria de paquetes ejecutables AppImage para Linux, derivados directamente de los lanzamientos oficiales de Google.',
+        'disclaimer': 'Aviso: Este es un proyecto comunitario no oficial. El IDE Antigravity y sus marcas registradas pertenecen a Google LLC. Los paquetes AppImage aquí provistos se generan a partir de los lanzamientos oficiales distribuidos por Google.',
+        'lang-indicator': 'Idioma: Español',
+
+        // Cards
+        'v2-tag': 'Agente de Escritorio',
+        'recommended': 'Recomendado',
+        'v2-desc': 'Aplicación de escritorio independiente tipo agente autónomo de IA (No-IDE) para Linux. Ejecución nativa en formato portable AppImage x64.',
+        'v2-btn': 'Descargar AppImage 2.0 (x64)',
+
+        'ide-tag': 'IDE Completo',
+        'ide-desc': 'Entorno de desarrollo integral para Linux empaquetado en formato portable AppImage de 64 bits derivado de los lanzamientos oficiales.',
+        'ide-btn': 'Descargar AppImage IDE (x64)',
+
+        'cli-tag': 'Oficial Google',
+        'cli-desc': 'Interfaz oficial de línea de comandos para Linux. Instalación directa mediante el script oficial de Google.',
+        'cli-cmd-label': 'Comando de Terminal:',
+        'cli-btn': 'Copiar Comando',
+
+        'format-label': 'Formato:',
+        'sha256-label': 'SHA-256:',
+        'copied': '¡Copiado al portapapeles!'
+      }
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Toast Notification Trigger
+      // Current language state (default: 'en')
+      let currentLang = localStorage.getItem('antigravity_lang') || 'en';
+
+      const btnEn = document.getElementById('lang-btn-en');
+      const btnEs = document.getElementById('lang-btn-es');
       const toast = document.getElementById('toast-notification');
       const toastMsg = document.getElementById('toast-message');
 
-      function showToast(message: string) {
+      function updateLanguage(lang: string) {
+        currentLang = lang;
+        localStorage.setItem('antigravity_lang', lang);
+
+        // Update active button state in header
+        if (lang === 'en') {
+          btnEn?.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+          btnEn?.classList.remove('text-zinc-400');
+          btnEs?.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+          btnEs?.classList.add('text-zinc-400');
+        } else {
+          btnEs?.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+          btnEs?.classList.remove('text-zinc-400');
+          btnEn?.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+          btnEn?.classList.add('text-zinc-400');
+        }
+
+        // Apply translations
+        const langDict = translations[lang] || translations.en;
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (key && langDict[key]) {
+            el.textContent = langDict[key];
+          }
+        });
+      }
+
+      // Button event listeners
+      btnEn?.addEventListener('click', () => updateLanguage('en'));
+      btnEs?.addEventListener('click', () => updateLanguage('es'));
+
+      // Initialize language
+      updateLanguage(currentLang);
+
+      // Toast notification helper
+      function showToast(messageKey: string) {
         if (!toast || !toastMsg) return;
-        toastMsg.textContent = message;
+        const dict = translations[currentLang] || translations.en;
+        toastMsg.textContent = dict[messageKey] || messageKey;
         toast.classList.remove('translate-y-12', 'opacity-0');
         toast.classList.add('translate-y-0', 'opacity-100');
 
@@ -79,19 +172,19 @@ import Toast from '../components/Toast.astro';
         }, 2500);
       }
 
-      // 2. Clipboard Copy Handlers
+      // Clipboard Copy Handlers
       document.querySelectorAll<HTMLElement>('.copy-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           const textToCopy = btn.getAttribute('data-text') || btn.getAttribute('data-hash');
           if (textToCopy) {
             navigator.clipboard.writeText(textToCopy);
-            showToast('Copied to clipboard!');
+            showToast('copied');
           }
         });
       });
 
-      // 3. Modal Controls for Package Downloads
+      // Modal Controls
       const modal = document.getElementById('install-modal');
       const modalClose = document.getElementById('modal-close');
       const modalDone = document.getElementById('modal-done-btn');
@@ -102,23 +195,23 @@ import Toast from '../components/Toast.astro';
       function openModal(format: string) {
         if (!modal || !modalTitle || !modalCmds || !directDownload) return;
 
-        let titleText = 'Downloading Antigravity v1.4.0';
+        let titleText = 'Downloading Antigravity AppImage...';
         let commandsHTML = '';
-        let downloadFile = 'Antigravity-1.4.0-x86_64.AppImage';
+        let downloadFile = 'Antigravity-2.0-Desktop-Agent-x86_64.AppImage';
 
         if (format === 'appimage-2') {
-          titleText = 'Downloading Antigravity-2.0-Desktop-Agent-x86_64.AppImage';
+          titleText = currentLang === 'es' ? 'Descargando Antigravity-2.0-Desktop-Agent-x86_64.AppImage' : 'Downloading Antigravity-2.0-Desktop-Agent-x86_64.AppImage';
           downloadFile = 'Antigravity-2.0-Desktop-Agent-x86_64.AppImage';
           commandsHTML = `
-            <p class="text-zinc-500"># Make executable and run Antigravity 2.0 Desktop Agent</p>
+            <p class="text-zinc-500"># ${currentLang === 'es' ? 'Dar permisos de ejecución e iniciar Antigravity 2.0' : 'Make executable and run Antigravity 2.0'}</p>
             <p>chmod +x Antigravity-2.0-Desktop-Agent-x86_64.AppImage</p>
             <p>./Antigravity-2.0-Desktop-Agent-x86_64.AppImage</p>
           `;
         } else if (format === 'appimage-ide' || format === 'appimage') {
-          titleText = 'Downloading Antigravity-IDE-1.4.0-x86_64.AppImage';
+          titleText = currentLang === 'es' ? 'Descargando Antigravity-IDE-1.4.0-x86_64.AppImage' : 'Downloading Antigravity-IDE-1.4.0-x86_64.AppImage';
           downloadFile = 'Antigravity-IDE-1.4.0-x86_64.AppImage';
           commandsHTML = `
-            <p class="text-zinc-500"># Make executable and run Antigravity IDE</p>
+            <p class="text-zinc-500"># ${currentLang === 'es' ? 'Dar permisos de ejecución e iniciar Antigravity IDE' : 'Make executable and run Antigravity IDE'}</p>
             <p>chmod +x Antigravity-IDE-1.4.0-x86_64.AppImage</p>
             <p>./Antigravity-IDE-1.4.0-x86_64.AppImage</p>
           `;
@@ -142,7 +235,7 @@ import Toast from '../components/Toast.astro';
       document.querySelectorAll('[data-modal-open]').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
-          const format = trigger.getAttribute('data-modal-open') || 'appimage';
+          const format = trigger.getAttribute('data-modal-open') || 'appimage-2';
           openModal(format);
         });
       });
