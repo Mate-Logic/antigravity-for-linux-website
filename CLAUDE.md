@@ -1,3 +1,8 @@
+## Package Manager Rule
+
+- ALWAYS use `pnpm` for all dependency management and commands (`pnpm add`, `pnpm install`, `pnpm dev`, `pnpm build`, etc.).
+- NEVER use `npm` or `npx`.
+
 ## Development
 
 When starting the dev server, use background mode:
@@ -20,3 +25,5 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+
