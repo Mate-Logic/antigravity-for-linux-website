@@ -1,43 +1,84 @@
-# Astro Starter Kit: Minimal
+# Antigravity for Linux
+
+Community-maintained download website for running Antigravity on Linux. The site provides portable AppImage downloads for the desktop agent and IDE, plus the official Antigravity CLI installation command.
+
+This is an unofficial community project. Antigravity, Antigravity IDE, and related trademarks belong to Google LLC. Always review downloaded files and their checksums before running them.
+
+## Live Website
+
+- Website: <https://mate-logic.github.io/antigravity-for-linux-website/>
+- Sitemap: <https://mate-logic.github.io/antigravity-for-linux-website/sitemap.xml>
+- Robots file: <https://mate-logic.github.io/antigravity-for-linux-website/robots.txt>
+
+## Features
+
+- AppImage downloads for the Antigravity desktop agent and IDE.
+- Latest IDE release information loaded from GitHub Releases.
+- SHA-256 checksums for release verification.
+- Official CLI installation command.
+- Responsive dark interface with English and Spanish UI controls.
+- Search engine metadata, canonical URLs, Open Graph tags, JSON-LD, sitemap, and Google Search Console verification.
+
+## Tech Stack
+
+- [Astro](https://astro.build/) for static site generation.
+- [Tailwind CSS](https://tailwindcss.com/) through the Vite plugin.
+- GitHub Pages for hosting.
+- GitHub Actions for automated builds and deployment.
+
+## Local Development
+
+Requirements:
+
+- Node.js 22.12.0 or newer.
+- pnpm 10 or newer.
+
+Install dependencies:
 
 ```sh
-pnpm create astro@latest -- --template minimal
+pnpm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Start the development server:
 
-## 🚀 Project Structure
+```sh
+pnpm dev
+```
 
-Inside of your Astro project, you'll see the following folders and files:
+The site is available at `http://localhost:4321/`.
+
+## Production Build
+
+Build the static site into `dist/`:
+
+```sh
+pnpm build
+```
+
+Preview the production build locally:
+
+```sh
+pnpm preview
+```
+
+## Project Structure
 
 ```text
-/
-├── public/
+.
+├── public/                 # Static assets, robots.txt, and sitemap.xml
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/         # UI components
+│   ├── layouts/            # Shared document layout and SEO metadata
+│   ├── pages/              # Astro routes
+│   └── styles/             # Global styles
+├── astro.config.mjs        # Site URL and GitHub Pages base path
+└── .github/workflows/      # GitHub Pages deployment workflow
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Pushing to `main` triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`. It installs dependencies with pnpm, builds the static site, and deploys `dist/` to GitHub Pages.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## License and Attribution
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+This repository contains an unofficial community website. Antigravity branding and trademarks are property of Google LLC. Refer to the original release repositories for the licensing terms of the distributed software.
