@@ -13,16 +13,16 @@ type GithubRelease = {
 
 const fallbackRelease = {
   version: '2.1.1',
-  releaseUrl: 'https://github.com/Mate-Logic/Antigravity-AppImage/releases/latest',
+  releaseUrl: 'https://github.com/Mate-Logic/AntigravityIDE-AppImage/releases/tag/latest',
   downloadUrl:
-    'https://github.com/Mate-Logic/Antigravity-AppImage/releases/download/latest/AntigravityIDE-x86_64.AppImage',
+    'https://github.com/Mate-Logic/AntigravityIDE-AppImage/releases/download/latest/AntigravityIDE-x86_64.AppImage',
   sha256: '93ee7205886e885b54c26d3292441e7977d27e5e8bd25a893a79a087502df3f6',
 };
 
 const release = await (async () => {
   try {
     const response = await fetch(
-      'https://api.github.com/repos/Mate-Logic/Antigravity-AppImage/releases/latest',
+      'https://api.github.com/repos/Mate-Logic/AntigravityIDE-AppImage/releases/latest',
       { headers: { Accept: 'application/vnd.github+json', 'User-Agent': 'antigravity-for-linux-website' } },
     );
     if (!response.ok) throw new Error(`GitHub API returned ${response.status}`);
