@@ -1,48 +1,85 @@
 ---
-// DownloadTable.astro - Tabla de paquetes de descarga para Linux
+// DownloadTable.astro - Tabla de paquetes de descarga para Linux (AppImage y binarios)
 ---
 
 <div class="space-y-6">
-  <!-- Section Title Header matching the exact screenshot layout -->
-  <div class="flex items-center justify-between">
+  <!-- Section Title Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
-      <h1 class="text-xl font-semibold text-white tracking-tight">Paquetes de Descarga Linux</h1>
+      <h2 class="text-xl font-semibold text-white tracking-tight">Paquetes & AppImage de Antigravity para Linux</h2>
       <p class="text-xs text-zinc-400 mt-1">
-        Binarios oficiales compilados para arquitecturas x86_64 y ARM64. Selecciona el formato según tu distribución.
+        Empaquetados comunitarios AppImage y binarios compilados en base a las descargas <code class="text-blue-300 bg-blue-950/60 px-1 py-0.5 rounded">.tar.gz</code> oficiales distribuidas por Google.
       </p>
     </div>
 
-    <!-- Primary Blue Action Button matching 'Crear Clave API' button in screenshot -->
+    <!-- Primary Blue Action Button -->
     <a
       href="#install-modal"
-      data-modal-open="deb"
-      class="bg-[#0066ff] hover:bg-blue-500 text-white text-xs font-medium px-4 py-2 rounded-md shadow-lg shadow-blue-600/20 transition-all flex items-center space-x-2 active:scale-95"
+      data-modal-open="appimage"
+      class="bg-[#0066ff] hover:bg-blue-500 text-white text-xs font-medium px-4 py-2.5 rounded-md shadow-lg shadow-blue-600/20 transition-all flex items-center justify-center space-x-2 active:scale-95 shrink-0"
     >
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
       </svg>
-      <span>Descargar v1.4.0 (.deb)</span>
+      <span>Descargar AppImage Portable</span>
     </a>
   </div>
 
-  <!-- Downloads Table Container matching screenshot aesthetic -->
+  <!-- Downloads Table Container -->
   <div class="border border-zinc-800/80 rounded-lg bg-[#0c0c0e] overflow-hidden">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-xs text-zinc-300">
-        <!-- Table Header matching uppercase font in screenshot -->
+        <!-- Table Header -->
         <thead class="bg-[#08080a] border-b border-zinc-800/80 text-[10px] uppercase font-mono tracking-wider text-zinc-500 select-none">
           <tr>
-            <th scope="col" class="py-3 px-5">Nombre / Formato</th>
-            <th scope="col" class="py-3 px-5">Distribuciones</th>
-            <th scope="col" class="py-3 px-5">Arquitectura</th>
-            <th scope="col" class="py-3 px-5">Tamaño</th>
-            <th scope="col" class="py-3 px-5 text-right">Acciones</th>
+            <th scope="col" class="py-3.5 px-5">FORMATO / FORMAT</th>
+            <th scope="col" class="py-3.5 px-5">DISTRIBUCIONES</th>
+            <th scope="col" class="py-3.5 px-5">ARQUITECTURA</th>
+            <th scope="col" class="py-3.5 px-5">TAMAÑO</th>
+            <th scope="col" class="py-3.5 px-5 text-right">ACCIONES</th>
           </tr>
         </thead>
 
         <!-- Table Body -->
         <tbody class="divide-y divide-zinc-800/60 font-mono text-[11px]">
-          <!-- Row 1: DEB -->
+          <!-- Row 1: AppImage (Destacado Principal) -->
+          <tr class="bg-blue-950/20 hover:bg-blue-950/30 transition-colors group">
+            <td class="py-4 px-5 font-sans font-medium text-white flex items-center space-x-3">
+              <span class="w-8 h-8 rounded bg-emerald-950/80 border border-emerald-700/50 text-emerald-400 font-mono text-[10px] font-bold flex items-center justify-center">
+                APP
+              </span>
+              <div>
+                <div class="text-zinc-100 font-semibold font-sans flex items-center space-x-2">
+                  <span>Antigravity-1.4.0-x86_64.AppImage</span>
+                  <span class="text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-800/50 px-1.5 py-0.5 rounded font-mono">Recomendado</span>
+                </div>
+                <div class="text-zinc-400 text-[10px]">Ejecutable portable (AppImage basado en tar.gz oficial)</div>
+              </div>
+            </td>
+            <td class="py-4 px-5 text-zinc-400 font-sans">
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/50 border border-emerald-800/40 text-emerald-300">Todas las distribuciones Linux</span>
+            </td>
+            <td class="py-4 px-5 text-zinc-400">x86_64</td>
+            <td class="py-4 px-5 text-zinc-400">102.1 MB</td>
+            <td class="py-4 px-5 text-right space-x-2">
+              <button 
+                data-copy="sha256-appimage" 
+                data-hash="3f2a1b0c9a8f9c2d1e4b3017fa98e3b2c1d0f97e6f5d4c3b2a1098987b6c5d4e"
+                class="copy-btn px-2.5 py-1 text-[10px] bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded transition-colors"
+                title="Copiar Hash SHA-256"
+              >
+                SHA-256 📋
+              </button>
+              <button 
+                data-modal-open="appimage"
+                class="px-3 py-1 text-[11px] bg-blue-600 hover:bg-blue-500 text-white font-sans rounded transition-colors font-medium shadow-sm"
+              >
+                Descargar
+              </button>
+            </td>
+          </tr>
+
+          <!-- Row 2: DEB -->
           <tr class="hover:bg-zinc-900/40 transition-colors group">
             <td class="py-3.5 px-5 font-sans font-medium text-white flex items-center space-x-3">
               <span class="w-7 h-7 rounded bg-red-950/60 border border-red-800/40 text-red-400 font-mono text-[10px] font-bold flex items-center justify-center">
@@ -78,7 +115,7 @@
             </td>
           </tr>
 
-          <!-- Row 2: RPM -->
+          <!-- Row 3: RPM -->
           <tr class="hover:bg-zinc-900/40 transition-colors group">
             <td class="py-3.5 px-5 font-sans font-medium text-white flex items-center space-x-3">
               <span class="w-7 h-7 rounded bg-blue-950/60 border border-blue-800/40 text-blue-400 font-mono text-[10px] font-bold flex items-center justify-center">
@@ -114,53 +151,22 @@
             </td>
           </tr>
 
-          <!-- Row 3: AppImage -->
-          <tr class="hover:bg-zinc-900/40 transition-colors group">
-            <td class="py-3.5 px-5 font-sans font-medium text-white flex items-center space-x-3">
-              <span class="w-7 h-7 rounded bg-emerald-950/60 border border-emerald-800/40 text-emerald-400 font-mono text-[10px] font-bold flex items-center justify-center">
-                APP
-              </span>
-              <div>
-                <div class="text-zinc-100 font-semibold font-sans">Antigravity-1.4.0-x86_64.AppImage</div>
-                <div class="text-zinc-500 text-[10px]">Ejecutable portable sin instalación</div>
-              </div>
-            </td>
-            <td class="py-3.5 px-5 text-zinc-400 font-sans">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/50 border border-emerald-800/40 text-emerald-300">Todas las Distros Linux</span>
-            </td>
-            <td class="py-3.5 px-5 text-zinc-400">x86_64</td>
-            <td class="py-3.5 px-5 text-zinc-400">102.1 MB</td>
-            <td class="py-3.5 px-5 text-right space-x-2">
-              <button 
-                data-copy="sha256-appimage" 
-                data-hash="3f2a1b0c9a8f9c2d1e4b3017fa98e3b2c1d0f97e6f5d4c3b2a1098987b6c5d4e"
-                class="copy-btn px-2.5 py-1 text-[10px] bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 rounded transition-colors"
-                title="Copiar Hash SHA-256"
-              >
-                SHA-256 📋
-              </button>
-              <button 
-                data-modal-open="appimage"
-                class="px-3 py-1 text-[11px] bg-blue-600 hover:bg-blue-500 text-white font-sans rounded transition-colors font-medium shadow-sm"
-              >
-                Descargar
-              </button>
-            </td>
-          </tr>
-
-          <!-- Row 4: TAR.GZ -->
+          <!-- Row 4: TAR.GZ (Oficial Google Release) -->
           <tr class="hover:bg-zinc-900/40 transition-colors group">
             <td class="py-3.5 px-5 font-sans font-medium text-white flex items-center space-x-3">
               <span class="w-7 h-7 rounded bg-amber-950/60 border border-amber-800/40 text-amber-400 font-mono text-[10px] font-bold flex items-center justify-center">
                 TAR
               </span>
               <div>
-                <div class="text-zinc-100 font-semibold font-sans">antigravity-1.4.0-linux-x64.tar.gz</div>
-                <div class="text-zinc-500 text-[10px]">Binarios autónomos comprimidos</div>
+                <div class="text-zinc-100 font-semibold font-sans flex items-center space-x-2">
+                  <span>antigravity-1.4.0-linux-x64.tar.gz</span>
+                  <span class="text-[9px] bg-amber-950 text-amber-300 border border-amber-800/50 px-1.5 py-0.5 rounded font-mono">Oficial Google</span>
+                </div>
+                <div class="text-zinc-500 text-[10px]">Binario portable oficial (Lanzamiento original de Google)</div>
               </div>
             </td>
             <td class="py-3.5 px-5 text-zinc-400 font-sans">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300">Generic Linux</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300">Linux Genérico</span>
               <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300">Alpine / Nix</span>
             </td>
             <td class="py-3.5 px-5 text-zinc-400">x86_64 / arm64</td>
@@ -197,10 +203,9 @@
             <td class="py-3.5 px-5 text-zinc-400 font-sans">
               <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300">Arch Linux</span>
               <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300">Manjaro</span>
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-zinc-900 border border-zinc-800 text-zinc-300">EndeavourOS</span>
             </td>
-            <td class="py-3.5 px-5 text-zinc-400">All Arch Archs</td>
-            <td class="py-3.5 px-5 text-zinc-400">Source Build</td>
+            <td class="py-3.5 px-5 text-zinc-400">x86_64</td>
+            <td class="py-3.5 px-5 text-zinc-400">PKGBUILD</td>
             <td class="py-3.5 px-5 text-right space-x-2">
               <button 
                 data-copy="aur-cmd" 

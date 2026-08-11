@@ -2,13 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import DownloadTable from '../components/DownloadTable.astro';
-import QuickInstall from '../components/QuickInstall.astro';
-import VerificationSection from '../components/VerificationSection.astro';
 import InstallModal from '../components/InstallModal.astro';
 import Toast from '../components/Toast.astro';
 ---
 
-<Layout title="Antigravity for Linux — Descargas Oficiales">
+<Layout title="Antigravity for Linux — AppImage & Linux Packages (Unofficial)">
   <div class="min-h-screen bg-[#08080a] flex flex-col">
     <!-- Main Sticky Header Navigation -->
     <Header />
@@ -18,35 +16,18 @@ import Toast from '../components/Toast.astro';
       
       <!-- Hero Banner Section -->
       <section class="text-center py-6 space-y-4 border-b border-zinc-900 pb-10">
-        <div class="inline-flex items-center space-x-2 bg-zinc-900/80 border border-zinc-800 px-3 py-1 rounded-full text-xs text-zinc-300">
+        <div class="inline-flex items-center space-x-2 bg-amber-950/40 border border-amber-800/40 px-3 py-1 rounded-full text-xs text-amber-300">
           <img src="/images/Antigravity_CLI.svg" alt="Antigravity CLI Logo" class="w-4 h-4 object-contain" />
-          <span>Binarios oficiales para distribuciones Linux (x86_64 / ARM64)</span>
+          <span>Proyecto No Oficial • Descargas AppImage para Linux</span>
         </div>
         
         <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-          Descargas de Antigravity para Linux
+          Antigravity for Linux
         </h1>
 
         <p class="text-sm text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          Obtén el asistente de IA Antigravity compilado nativamente para Ubuntu, Debian, Fedora, Arch Linux y paquetes portables AppImage.
+          Publicación comunitaria no oficial de paquetes <span class="text-zinc-200 font-semibold">AppImage</span> y binarios para distribuciones Linux, empaquetados directamente a partir de las versiones <code class="text-blue-300 bg-blue-950/60 px-1 py-0.5 rounded">.tar.gz</code> oficiales distribuidas por Google.
         </p>
-
-        <!-- Quick 1-line installation snippet -->
-        <div class="max-w-xl mx-auto pt-2">
-          <div class="relative group bg-[#0c0c0e] border border-zinc-800 rounded-lg p-3 flex items-center justify-between text-xs font-mono text-blue-400 shadow-xl">
-            <div class="flex items-center space-x-2 overflow-x-auto">
-              <span class="text-zinc-500 font-bold">$</span>
-              <code class="text-zinc-200">curl -fsSL https://antigravity-linux.org/install.sh | bash</code>
-            </div>
-            <button 
-              data-copy="hero-script"
-              data-text="curl -fsSL https://antigravity-linux.org/install.sh | bash"
-              class="copy-btn shrink-0 ml-3 bg-blue-600 hover:bg-blue-500 text-white font-sans text-[11px] font-medium px-3 py-1.5 rounded transition-all active:scale-95 shadow"
-            >
-              Copiar
-            </button>
-          </div>
-        </div>
       </section>
 
       <!-- Section 1: Main Download Packages Table -->
@@ -54,30 +35,19 @@ import Toast from '../components/Toast.astro';
         <DownloadTable />
       </section>
 
-      <!-- Section 2: Terminal Commands & Repositories -->
-      <section class="space-y-6">
-        <QuickInstall />
-      </section>
-
-      <!-- Section 3: GPG Keys & Hash Verification (Matching user screenshot style) -->
-      <section class="space-y-6">
-        <VerificationSection />
-      </section>
-
     </main>
 
-    <!-- Footer matching screenshot footer layout -->
+    <!-- Clean Footer with Disclaimer and English language default -->
     <footer class="border-t border-zinc-900 bg-[#060608] py-8 text-xs text-zinc-500 font-mono mt-auto">
       <div class="max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="flex items-center space-x-5">
-          <span class="text-zinc-400 font-semibold">©2026 Anomaly</span>
-          <a href="#" class="hover:text-zinc-300 transition-colors">Marca</a>
-          <a href="#" class="hover:text-zinc-300 transition-colors">Privacidad</a>
-          <a href="#" class="hover:text-zinc-300 transition-colors">Términos</a>
-        </div>
+        <!-- Unofficial Disclaimer -->
+        <p class="text-[11px] text-zinc-500 max-w-xl">
+          Disclaimer: This is an unofficial community site. Antigravity IDE and trademarks belong to Google LLC. Packages provided here are AppImage builds based on official Linux tar.gz releases distributed by Google.
+        </p>
 
-        <div class="flex items-center space-x-2 cursor-pointer hover:text-zinc-300 transition-colors">
-          <span>Español</span>
+        <!-- Language Selector defaulted to English -->
+        <div class="flex items-center space-x-2 cursor-pointer hover:text-zinc-300 transition-colors shrink-0">
+          <span class="text-zinc-300 font-sans font-medium">English</span>
           <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
           </svg>
@@ -116,7 +86,7 @@ import Toast from '../components/Toast.astro';
           const textToCopy = btn.getAttribute('data-text') || btn.getAttribute('data-hash');
           if (textToCopy) {
             navigator.clipboard.writeText(textToCopy);
-            showToast('¡Copiado al portapapeles!');
+            showToast('Copied to clipboard!');
           }
         });
       });
@@ -132,39 +102,37 @@ import Toast from '../components/Toast.astro';
       function openModal(format: string) {
         if (!modal || !modalTitle || !modalCmds || !directDownload) return;
 
-        let titleText = 'Descargando Antigravity v1.4.0';
+        let titleText = 'Downloading Antigravity v1.4.0';
         let commandsHTML = '';
-        let downloadFile = 'antigravity_1.4.0_amd64.deb';
+        let downloadFile = 'Antigravity-1.4.0-x86_64.AppImage';
 
-        if (format === 'deb') {
-          titleText = 'Descargando antigravity_1.4.0_amd64.deb';
-          downloadFile = 'antigravity_1.4.0_amd64.deb';
-          commandsHTML = `
-            <p class="text-zinc-500"># Instalar archivo .deb en Debian / Ubuntu</p>
-            <p>sudo dpkg -i antigravity_1.4.0_amd64.deb</p>
-            <p class="text-zinc-500"># Corregir dependencias</p>
-            <p>sudo apt-get install -f</p>
-          `;
-        } else if (format === 'rpm') {
-          titleText = 'Descargando antigravity-1.4.0.x86_64.rpm';
-          downloadFile = 'antigravity-1.4.0.x86_64.rpm';
-          commandsHTML = `
-            <p class="text-zinc-500"># Instalar archivo .rpm en Fedora / RHEL</p>
-            <p>sudo dnf install ./antigravity-1.4.0.x86_64.rpm</p>
-          `;
-        } else if (format === 'appimage') {
-          titleText = 'Descargando Antigravity-1.4.0-x86_64.AppImage';
+        if (format === 'appimage') {
+          titleText = 'Downloading Antigravity-1.4.0-x86_64.AppImage';
           downloadFile = 'Antigravity-1.4.0-x86_64.AppImage';
           commandsHTML = `
-            <p class="text-zinc-500"># Dar permisos de ejecución e iniciar</p>
+            <p class="text-zinc-500"># Make executable and run</p>
             <p>chmod +x Antigravity-1.4.0-x86_64.AppImage</p>
             <p>./Antigravity-1.4.0-x86_64.AppImage</p>
           `;
+        } else if (format === 'deb') {
+          titleText = 'Downloading antigravity_1.4.0_amd64.deb';
+          downloadFile = 'antigravity_1.4.0_amd64.deb';
+          commandsHTML = `
+            <p class="text-zinc-500"># Install .deb package in Debian / Ubuntu</p>
+            <p>sudo dpkg -i antigravity_1.4.0_amd64.deb</p>
+          `;
+        } else if (format === 'rpm') {
+          titleText = 'Downloading antigravity-1.4.0.x86_64.rpm';
+          downloadFile = 'antigravity-1.4.0.x86_64.rpm';
+          commandsHTML = `
+            <p class="text-zinc-500"># Install .rpm package in Fedora / RHEL</p>
+            <p>sudo dnf install ./antigravity-1.4.0.x86_64.rpm</p>
+          `;
         } else if (format === 'tar') {
-          titleText = 'Descargando antigravity-1.4.0-linux-x64.tar.gz';
+          titleText = 'Downloading antigravity-1.4.0-linux-x64.tar.gz';
           downloadFile = 'antigravity-1.4.0-linux-x64.tar.gz';
           commandsHTML = `
-            <p class="text-zinc-500"># Extraer tarball binario</p>
+            <p class="text-zinc-500"># Extract official Google binary tarball</p>
             <p>tar -xzf antigravity-1.4.0-linux-x64.tar.gz</p>
             <p>./antigravity/bin/antigravity</p>
           `;
@@ -188,7 +156,7 @@ import Toast from '../components/Toast.astro';
       document.querySelectorAll('[data-modal-open]').forEach(trigger => {
         trigger.addEventListener('click', (e) => {
           e.preventDefault();
-          const format = trigger.getAttribute('data-modal-open') || 'deb';
+          const format = trigger.getAttribute('data-modal-open') || 'appimage';
           openModal(format);
         });
       });
@@ -199,54 +167,6 @@ import Toast from '../components/Toast.astro';
       modal?.addEventListener('click', (e) => {
         if (e.target === modal) closeModal();
       });
-
-      // 4. 'Crear Clave API' Interactive Button
-      const createKeyBtn = document.getElementById('create-key-btn');
-      const apiKeysList = document.getElementById('api-keys-list');
-
-      if (createKeyBtn && apiKeysList) {
-        createKeyBtn.addEventListener('click', () => {
-          const randomSuffix = Math.random().toString(36).substring(2, 8);
-          const newKey = `sk-${randomSuffix}...qwLs`;
-          const fullKey = `sk-${randomSuffix}9A8B7C6D5E4F3G2H1I0JqwLs`;
-
-          const row = document.createElement('tr');
-          row.className = 'hover:bg-zinc-900/40 transition-colors animate-fadeIn';
-          row.innerHTML = `
-            <td class="py-4 px-6 font-sans font-medium text-white">New Production API Key</td>
-            <td class="py-4 px-6 text-zinc-300">
-              <div class="flex items-center space-x-2">
-                <span>${newKey}</span>
-                <button 
-                  data-copy="key-new"
-                  data-text="${fullKey}"
-                  class="copy-btn text-zinc-500 hover:text-zinc-200 transition-colors"
-                  title="Copiar Clave"
-                >
-                  📋
-                </button>
-              </div>
-            </td>
-            <td class="py-4 px-6 text-zinc-400 font-sans">user@antigravity-linux.org</td>
-            <td class="py-4 px-6 text-right">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">Activa</span>
-            </td>
-          `;
-
-          apiKeysList.prepend(row);
-
-          const newCopyBtn = row.querySelector('.copy-btn');
-          if (newCopyBtn) {
-            newCopyBtn.addEventListener('click', (e) => {
-              e.preventDefault();
-              navigator.clipboard.writeText(fullKey);
-              showToast('¡Nueva clave copiada al portapapeles!');
-            });
-          }
-
-          showToast('¡Clave API creada exitosamente!');
-        });
-      }
     });
   </script>
 </Layout>
