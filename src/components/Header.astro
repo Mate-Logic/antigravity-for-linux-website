@@ -5,8 +5,8 @@
 <header class="border-b border-zinc-800/80 bg-[#08080a] sticky top-0 z-40 backdrop-blur-md bg-opacity-90">
   <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
     <!-- Brand & Logo -->
-    <a href="/" class="flex items-center space-x-3 group">
-      <img src="/images/Antigravity_CLI.svg" alt="Antigravity CLI Logo" class="w-9 h-9 object-contain drop-shadow-md group-hover:scale-105 transition-transform" />
+    <a href={import.meta.env.BASE_URL} class="flex items-center space-x-3 group">
+      <img src={`${import.meta.env.BASE_URL}images/Antigravity_CLI.svg`} alt="Antigravity CLI Logo" class="w-9 h-9 object-contain drop-shadow-md group-hover:scale-105 transition-transform" />
       <div class="flex items-center space-x-2">
         <span class="font-bold text-white text-lg tracking-tight">Antigravity</span>
         <span class="text-xs text-blue-400 font-mono bg-blue-950/60 border border-blue-800/40 px-2 py-0.5 rounded">Linux</span>
