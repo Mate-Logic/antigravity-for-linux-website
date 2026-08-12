@@ -75,8 +75,8 @@ import Toast from '../components/Toast.astro';
         // Cards
         'v2-tag': 'Desktop Agent',
         'recommended': 'Recommended',
-        'v2-desc': 'Standalone AI desktop agent application (Non-IDE) for Linux. Instant native execution in 64-bit portable AppImage format.',
-        'v2-btn': 'Download AppImage 2.0 (x64)',
+        'v2-desc': 'Standalone AI desktop agent application (Non-IDE) for Linux packaged as a 64-bit portable AppImage derived from official releases.',
+        'v2-btn': 'Download AppImage 2.0 v{version} (x64)',
         
         'ide-tag': 'Full IDE',
         'ide-desc': 'Complete development environment for Linux packaged as a 64-bit portable AppImage derived from official releases.',
@@ -87,9 +87,17 @@ import Toast from '../components/Toast.astro';
         'cli-cmd-label': 'Terminal Command:',
         'cli-btn': 'Copy Command',
 
-        'format-label': 'Format:',
-        'sha256-label': 'SHA-256:',
-        'copied': 'Copied to clipboard!'
+        'format-label': 'Format',
+        'arch-label': 'Architecture',
+        'sha256-label': 'SHA-256 Checksum',
+        'copy-btn-text': 'Copy',
+        'copied': 'Copied to clipboard!',
+
+        // Gear Lever Recommendation
+        'gearlever-tag': '⚡ Recommended AppImage Manager',
+        'gearlever-title': 'Easily integrate AppImages into your Linux Menu & Taskbar with Gear Lever',
+        'gearlever-desc': 'We recommend using Gear Lever to manage your AppImages. It automatically creates system desktop shortcuts, sets application icons, pins AppImages to your taskbar/dock, and handles updates seamlessly.',
+        'gearlever-btn': 'Get Gear Lever on Flathub'
       },
       es: {
         'hero-badge': 'Descargas Comunitarias No Oficiales • Linux (x86_64)',
@@ -101,8 +109,8 @@ import Toast from '../components/Toast.astro';
         // Cards
         'v2-tag': 'Agente de Escritorio',
         'recommended': 'Recomendado',
-        'v2-desc': 'Aplicación de escritorio independiente tipo agente autónomo de IA (No-IDE) para Linux. Ejecución nativa en formato portable AppImage x64.',
-        'v2-btn': 'Descargar AppImage 2.0 (x64)',
+        'v2-desc': 'Aplicación de escritorio independiente de agente de IA (No-IDE) para Linux empaquetada en formato portable AppImage de 64 bits derivada de los lanzamientos oficiales.',
+        'v2-btn': 'Descargar AppImage 2.0 v{version} (x64)',
 
         'ide-tag': 'IDE Completo',
         'ide-desc': 'Entorno de desarrollo integral para Linux empaquetado en formato portable AppImage de 64 bits derivado de los lanzamientos oficiales.',
@@ -113,9 +121,17 @@ import Toast from '../components/Toast.astro';
         'cli-cmd-label': 'Comando de Terminal:',
         'cli-btn': 'Copiar Comando',
 
-        'format-label': 'Formato:',
-        'sha256-label': 'SHA-256:',
-        'copied': '¡Copiado al portapapeles!'
+        'format-label': 'Formato',
+        'arch-label': 'Arquitectura',
+        'sha256-label': 'Checksum SHA-256',
+        'copy-btn-text': 'Copiar',
+        'copied': '¡Copiado al portapapeles!',
+
+        // Gear Lever Recommendation
+        'gearlever-tag': '⚡ Gestor Recomendado de AppImages',
+        'gearlever-title': 'Integra tus AppImages en el Menú y Barra de Tareas con Gear Lever',
+        'gearlever-desc': 'Recomendamos usar Gear Lever para gestionar tus AppImages. Crea acceso directo en el menú de aplicaciones, establece íconos, ancla las aplicaciones a la barra de tareas y gestiona actualizaciones de forma automática.',
+        'gearlever-btn': 'Ver Gear Lever en Flathub'
       }
     };
 
@@ -150,7 +166,8 @@ import Toast from '../components/Toast.astro';
         document.querySelectorAll('[data-i18n]').forEach(el => {
           const key = el.getAttribute('data-i18n');
           if (key && langDict[key]) {
-            el.textContent = langDict[key].replace('{version}', el.getAttribute('data-release-version') || '');
+            const version = el.getAttribute('data-v2-version') || el.getAttribute('data-release-version') || '';
+            el.textContent = langDict[key].replace('{version}', version);
           }
         });
       }
