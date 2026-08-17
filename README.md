@@ -77,7 +77,7 @@ pnpm preview
 
 ## Deployment
 
-Pushing to `main` triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`. It installs dependencies with pnpm, builds the static site, and deploys `dist/` to GitHub Pages.
+Pushing to `main` triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`. The workflow also runs every 6 hours, reads the current releases directly from GitHub, builds the static site, and deploys `dist/` to GitHub Pages. If a release cannot be read or is missing its AppImage/checksum, the build fails instead of publishing stale data.
 
 ## License and Attribution
 
