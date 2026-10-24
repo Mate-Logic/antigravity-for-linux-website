@@ -69,7 +69,49 @@ async function fetchLatestRelease(repo: string): Promise<ReleaseInfo> {
   };
 }
 
-const v2Release = await fetchLatestRelease('Mate-Logic/Antigravity2.0-AppImage');
+type OfficialAppImage = {
+  version: string;
+  downloadUrl: string;
+  debUrl?: string;
+  sha512: string;
+  publishedOn?: string;
+};
+
+// Google no enlaza el AppImage de Antigravity 2.0 en su página de descargas, pero lo
+// publica en el manifiesto que consulta el auto-updater de la app (resources/app-update.yml).
+const HUB_MANIFEST_URL =
+  'https://antigravity-hub-auto-updater-974169037036.us-central1.run.app/manifest/latest-x64-linux.yml';
+
+async function fetchOfficialAppImage(): Promise<OfficialAppImage> {
+  const response = await fetch(HUB_MANIFEST_URL, {
+    headers: { 'User-Agent': 'antigravity-for-linux-website' },
+  });
+  if (!response.ok) throw new Error(`The Antigravity update manifest returned ${response.status}`);
+  const manifest = await response.text();
+
+  const version = manifest.match(/^version:\s*(\d+\.\d+\.\d+)\s*$/m)?.[1];
+  const files = [...manifest.matchAll(/-\s*url:\s*(\S+)\s+sha512:\s*(\S+)/g)].map(([, url, sha512]) => ({ url, sha512 }));
+  const appImage = files.find((file) => file.url.endsWith('/Antigravity.AppImage'));
+  if (!version || !appImage) throw new Error('The Antigravity update manifest has no AppImage entry');
+
+  // El manifiesto usa SHA-512 en base64 (formato electron-updater); se muestra en hex
+  // para poder compararlo directamente con la salida de sha512sum.
+  const sha512 = Buffer.from(appImage.sha512, 'base64').toString('hex');
+
+  const head = await fetch(appImage.url, { method: 'HEAD' });
+  if (!head.ok) throw new Error(`The official AppImage returned ${head.status}`);
+  const lastModified = head.headers.get('last-modified');
+
+  return {
+    version,
+    downloadUrl: appImage.url,
+    debUrl: files.find((file) => file.url.endsWith('/Antigravity.deb'))?.url,
+    sha512,
+    publishedOn: lastModified ? new Date(lastModified).toISOString().slice(0, 10) : undefined,
+  };
+}
+
+const v2Release = await fetchOfficialAppImage();
 
 const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage');
 ---
@@ -87,19 +129,21 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
           </div>
           <div class="flex items-center space-x-1.5">
             <span class="text-[10px] bg-purple-950 text-purple-300 border border-purple-700/60 px-2 py-0.5 rounded-full font-mono font-semibold" data-i18n="v2-tag">Desktop Agent</span>
-            <span class="text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-800/50 px-2 py-0.5 rounded-full font-mono font-medium" data-i18n="recommended">Recommended</span>
+            <span class="text-[9px] bg-emerald-950 text-emerald-400 border border-emerald-800/50 px-2 py-0.5 rounded-full font-mono font-medium" data-i18n="v2-official">Official Google</span>
           </div>
         </div>
 
         <div>
           <h3 class="text-xl font-bold text-white tracking-tight">
-            Antigravity 2.0 <a href={v2Release.releaseUrl} class="text-purple-400 hover:text-purple-300" target="_blank" rel="noopener noreferrer">v{v2Release.version}</a>
+            Antigravity 2.0 <a href="https://antigravity.google/docs/changelog?tab=hub" class="text-purple-400 hover:text-purple-300" target="_blank" rel="noopener noreferrer">v{v2Release.version}</a>
           </h3>
-          <p class="text-[10px] text-zinc-500 font-mono mt-1">
-            <span data-i18n="built-label">Built on</span> <time datetime={v2Release.builtOn}>{v2Release.builtOn}</time>
-          </p>
+          {v2Release.publishedOn && (
+            <p class="text-[10px] text-zinc-500 font-mono mt-1">
+              <span data-i18n="published-label">Published by Google on</span> <time datetime={v2Release.publishedOn}>{v2Release.publishedOn}</time>
+            </p>
+          )}
           <p class="text-xs text-zinc-400 mt-2 leading-relaxed" data-i18n="v2-desc">
-            Standalone AI desktop agent application (Non-IDE) for Linux packaged as a 64-bit portable AppImage derived from official releases.
+            Standalone AI desktop agent application (Non-IDE) for Linux. This is Google's own official AppImage, downloaded directly from Google's servers.
           </p>
         </div>
 
@@ -118,15 +162,15 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
 
           <div class="bg-[#090710] border border-purple-900/60 p-3 rounded-xl space-y-1.5 shadow-inner">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] text-zinc-400 font-semibold uppercase tracking-wider flex items-center gap-1.5" data-i18n="sha256-label">
+              <span class="text-[10px] text-zinc-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
                 <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
-                SHA-256 Checksum
+                <span data-i18n="sha512-label">Official SHA-512 Checksum</span>
               </span>
               <button 
-                data-copy="sha256-v2" 
-                data-hash={v2Release.sha256}
+                data-copy="sha512-v2" 
+                data-hash={v2Release.sha512}
                 class="copy-btn text-[10px] bg-purple-950/80 hover:bg-purple-800/80 text-purple-200 border border-purple-700/60 px-2 py-1 rounded-md transition-colors flex items-center gap-1"
               >
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,9 +180,17 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
               </button>
             </div>
             <div class="bg-[#05040a] p-2 rounded border border-purple-950 font-mono text-[10px] text-purple-200 break-all select-all leading-tight">
-              {v2Release.sha256}
+              {v2Release.sha512}
             </div>
           </div>
+
+          <details class="bg-[#090710] border border-purple-950/80 p-3 rounded-xl font-sans group/source">
+            <summary class="text-[11px] text-purple-300 font-semibold cursor-pointer select-none" data-i18n="v2-source-title">Where does this link come from?</summary>
+            <p class="text-[11px] text-zinc-400 leading-relaxed mt-2" data-i18n="v2-source-desc">
+              Google doesn't list this AppImage on its download page. It is published in the auto-update manifest that the Antigravity app itself checks (referenced in resources/app-update.yml inside the official .tar.gz). This site reads that manifest on every build, so the link always points to Google's latest version.
+            </p>
+            <a href={HUB_MANIFEST_URL} class="inline-block text-[11px] text-purple-400 hover:text-purple-300 underline mt-2" target="_blank" rel="noopener noreferrer" data-i18n="v2-source-link">View the official manifest</a>
+          </details>
         </div>
       </div>
 
@@ -151,8 +203,11 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
         </svg>
-        <span data-i18n="v2-btn" data-v2-version={v2Release.version}>Download AppImage 2.0 v{v2Release.version} (x64)</span>
+        <span data-i18n="v2-btn" data-v2-version={v2Release.version}>Download official AppImage v{v2Release.version} (x64)</span>
       </a>
+      {v2Release.debUrl && (
+        <a href={v2Release.debUrl} class="text-[11px] text-zinc-500 hover:text-purple-300 text-center mt-2 underline" target="_blank" rel="noopener noreferrer" data-i18n="v2-deb">Also available: official .deb package</a>
+      )}
     </div>
 
     <!-- Card 2: Antigravity IDE (Full IDE - AppImage x64) -->
@@ -173,7 +228,7 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
             <span data-i18n="built-label">Built on</span> <time datetime={ideRelease.builtOn}>{ideRelease.builtOn}</time>
           </p>
           <p class="text-xs text-zinc-400 mt-2 leading-relaxed" data-i18n="ide-desc">
-            Complete development environment for Linux packaged as a 64-bit portable AppImage derived from official releases.
+            Complete development environment for Linux. Google doesn't ship an AppImage of the IDE, so the community builds this 64-bit portable AppImage from Google's official Linux release.
           </p>
         </div>
 
@@ -192,11 +247,11 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
 
           <div class="bg-[#050507] border border-zinc-800/90 p-3 rounded-xl space-y-1.5 shadow-inner">
             <div class="flex items-center justify-between">
-              <span class="text-[10px] text-zinc-400 font-semibold uppercase tracking-wider flex items-center gap-1.5" data-i18n="sha256-label">
+              <span class="text-[10px] text-zinc-400 font-semibold uppercase tracking-wider flex items-center gap-1.5">
                 <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
-                SHA-256 Checksum
+                <span data-i18n="sha256-label">SHA-256 Checksum</span>
               </span>
               <button 
                 data-copy="sha256-appimage" 

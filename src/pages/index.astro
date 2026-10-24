@@ -29,7 +29,7 @@ import Toast from '../components/Toast.astro';
         </h1>
 
         <p class="text-sm sm:text-base text-zinc-400 max-w-2xl mx-auto leading-relaxed" data-i18n="hero-subtitle">
-          Community distribution of portable AppImage packages for Linux, built directly from official Google Linux releases.
+          Antigravity downloads for Linux: Google's official AppImage of Antigravity 2.0, a community-built AppImage of the IDE, and the official CLI installer.
         </p>
       </section>
 
@@ -46,7 +46,7 @@ import Toast from '../components/Toast.astro';
       <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <!-- Unofficial Disclaimer -->
         <p class="text-[11px] text-zinc-500 max-w-2xl text-center md:text-left leading-relaxed" data-i18n="disclaimer">
-          Disclaimer: This is an unofficial community project. Antigravity IDE and trademarks belong to Google LLC. Desktop AppImage packages provided here are built from official Linux releases distributed by Google.
+          Disclaimer: This is an unofficial community project. Antigravity and its trademarks belong to Google LLC. The Antigravity 2.0 AppImage and the CLI are downloaded directly from Google; the IDE AppImage is built by the community from Google's official Linux release.
         </p>
 
         <!-- Footer Language Indicator -->
@@ -68,18 +68,24 @@ import Toast from '../components/Toast.astro';
       en: {
         'hero-badge': 'Unofficial Community Downloads • Linux (x86_64)',
         'hero-title': 'Antigravity for Linux',
-        'hero-subtitle': 'Community distribution of portable AppImage packages for Linux, built directly from official Google Linux releases.',
-        'disclaimer': 'Disclaimer: This is an unofficial community project. Antigravity IDE and trademarks belong to Google LLC. Desktop AppImage packages provided here are built from official Linux releases distributed by Google.',
+        'hero-subtitle': "Antigravity downloads for Linux: Google's official AppImage of Antigravity 2.0, a community-built AppImage of the IDE, and the official CLI installer.",
+        'disclaimer': "Disclaimer: This is an unofficial community project. Antigravity and its trademarks belong to Google LLC. The Antigravity 2.0 AppImage and the CLI are downloaded directly from Google; the IDE AppImage is built by the community from Google's official Linux release.",
         'lang-indicator': 'Language: English',
         
         // Cards
         'v2-tag': 'Desktop Agent',
         'recommended': 'Recommended',
-        'v2-desc': 'Standalone AI desktop agent application (Non-IDE) for Linux packaged as a 64-bit portable AppImage derived from official releases.',
-        'v2-btn': 'Download AppImage 2.0 v{version} (x64)',
+        'v2-official': 'Official Google',
+        'published-label': 'Published by Google on',
+        'v2-desc': "Standalone AI desktop agent application (Non-IDE) for Linux. This is Google's own official AppImage, downloaded directly from Google's servers.",
+        'v2-btn': 'Download official AppImage v{version} (x64)',
+        'v2-deb': 'Also available: official .deb package',
+        'v2-source-title': 'Where does this link come from?',
+        'v2-source-desc': "Google doesn't list this AppImage on its download page. It is published in the auto-update manifest that the Antigravity app itself checks (referenced in resources/app-update.yml inside the official .tar.gz). This site reads that manifest on every build, so the link always points to Google's latest version.",
+        'v2-source-link': 'View the official manifest',
         
         'ide-tag': 'Full IDE',
-        'ide-desc': 'Complete development environment for Linux packaged as a 64-bit portable AppImage derived from official releases.',
+        'ide-desc': "Complete development environment for Linux. Google doesn't ship an AppImage of the IDE, so the community builds this 64-bit portable AppImage from Google's official Linux release.",
         'ide-btn': 'Download AppImage IDE v{version} (x64)',
 
         'cli-tag': 'Official Google',
@@ -90,6 +96,7 @@ import Toast from '../components/Toast.astro';
         'format-label': 'Format',
         'arch-label': 'Architecture',
         'sha256-label': 'SHA-256 Checksum',
+        'sha512-label': 'Official SHA-512 Checksum',
         'built-label': 'Built on',
         'copy-btn-text': 'Copy',
         'copied': 'Copied to clipboard!',
@@ -103,18 +110,24 @@ import Toast from '../components/Toast.astro';
       es: {
         'hero-badge': 'Descargas Comunitarias No Oficiales • Linux (x86_64)',
         'hero-title': 'Antigravity para Linux',
-        'hero-subtitle': 'Publicación comunitaria de paquetes ejecutables AppImage para Linux, derivados directamente de los lanzamientos oficiales de Google.',
-        'disclaimer': 'Aviso: Este es un proyecto comunitario no oficial. El IDE Antigravity y sus marcas registradas pertenecen a Google LLC. Los paquetes AppImage aquí provistos se generan a partir de los lanzamientos oficiales distribuidos por Google.',
+        'hero-subtitle': 'Descargas de Antigravity para Linux: el AppImage oficial de Google de Antigravity 2.0, un AppImage del IDE compilado por la comunidad y el instalador oficial del CLI.',
+        'disclaimer': 'Aviso: Este es un proyecto comunitario no oficial. Antigravity y sus marcas registradas pertenecen a Google LLC. El AppImage de Antigravity 2.0 y el CLI se descargan directamente de Google; el AppImage del IDE lo compila la comunidad a partir del lanzamiento oficial de Google para Linux.',
         'lang-indicator': 'Idioma: Español',
 
         // Cards
         'v2-tag': 'Agente de Escritorio',
         'recommended': 'Recomendado',
-        'v2-desc': 'Aplicación de escritorio independiente de agente de IA (No-IDE) para Linux empaquetada en formato portable AppImage de 64 bits derivada de los lanzamientos oficiales.',
-        'v2-btn': 'Descargar AppImage 2.0 v{version} (x64)',
+        'v2-official': 'Oficial de Google',
+        'published-label': 'Publicado por Google el',
+        'v2-desc': 'Aplicación de escritorio independiente de agente de IA (No-IDE) para Linux. Es el AppImage oficial de Google, descargado directamente desde los servidores de Google.',
+        'v2-btn': 'Descargar AppImage oficial v{version} (x64)',
+        'v2-deb': 'También disponible: paquete .deb oficial',
+        'v2-source-title': '¿De dónde sale este enlace?',
+        'v2-source-desc': 'Google no muestra este AppImage en su página de descargas. Está publicado en el manifiesto de auto-actualización que consulta la propia app de Antigravity (referenciado en resources/app-update.yml dentro del .tar.gz oficial). Este sitio lee ese manifiesto en cada compilación, así que el enlace siempre apunta a la última versión de Google.',
+        'v2-source-link': 'Ver el manifiesto oficial',
 
         'ide-tag': 'IDE Completo',
-        'ide-desc': 'Entorno de desarrollo integral para Linux empaquetado en formato portable AppImage de 64 bits derivado de los lanzamientos oficiales.',
+        'ide-desc': 'Entorno de desarrollo integral para Linux. Google no publica un AppImage del IDE, así que la comunidad compila este AppImage portable de 64 bits a partir del lanzamiento oficial de Google para Linux.',
         'ide-btn': 'Descargar AppImage IDE v{version} (x64)',
 
         'cli-tag': 'Oficial Google',
@@ -125,6 +138,7 @@ import Toast from '../components/Toast.astro';
         'format-label': 'Formato',
         'arch-label': 'Arquitectura',
         'sha256-label': 'Checksum SHA-256',
+        'sha512-label': 'Checksum SHA-512 oficial',
         'built-label': 'Compilado el',
         'copy-btn-text': 'Copiar',
         'copied': '¡Copiado al portapapeles!',
