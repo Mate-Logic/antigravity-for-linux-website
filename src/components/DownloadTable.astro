@@ -74,6 +74,8 @@ type OfficialAppImage = {
   downloadUrl: string;
   debUrl?: string;
   sha512: string;
+  // false cuando el hash lo calcula este sitio porque el manifiesto aún no lista la versión.
+  sha512IsOfficial: boolean;
   publishedOn?: string;
 };
 
@@ -81,11 +83,21 @@ type OfficialAppImage = {
 // publica en el manifiesto que consulta el auto-updater de la app (resources/app-update.yml).
 const HUB_MANIFEST_URL =
   'https://antigravity-hub-auto-updater-974169037036.us-central1.run.app/manifest/latest-x64-linux.yml';
+const DOWNLOAD_PAGE_URL = 'https://antigravity.google/download';
+const USER_AGENT = 'antigravity-for-linux-website';
 
-async function fetchOfficialAppImage(): Promise<OfficialAppImage> {
-  const response = await fetch(HUB_MANIFEST_URL, {
-    headers: { 'User-Agent': 'antigravity-for-linux-website' },
-  });
+function compareVersions(a: string, b: string): number {
+  const pa = a.split('.').map(Number);
+  const pb = b.split('.').map(Number);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const diff = (pa[i] ?? 0) - (pb[i] ?? 0);
+    if (diff) return diff;
+  }
+  return 0;
+}
+
+async function fetchManifest() {
+  const response = await fetch(HUB_MANIFEST_URL, { headers: { 'User-Agent': USER_AGENT } });
   if (!response.ok) throw new Error(`The Antigravity update manifest returned ${response.status}`);
   const manifest = await response.text();
 
@@ -94,21 +106,70 @@ async function fetchOfficialAppImage(): Promise<OfficialAppImage> {
   const appImage = files.find((file) => file.url.endsWith('/Antigravity.AppImage'));
   if (!version || !appImage) throw new Error('The Antigravity update manifest has no AppImage entry');
 
-  // El manifiesto usa SHA-512 en base64 (formato electron-updater); se muestra en hex
-  // para poder compararlo directamente con la salida de sha512sum.
-  const sha512 = Buffer.from(appImage.sha512, 'base64').toString('hex');
-
-  const head = await fetch(appImage.url, { method: 'HEAD' });
-  if (!head.ok) throw new Error(`The official AppImage returned ${head.status}`);
-  const lastModified = head.headers.get('last-modified');
-
   return {
     version,
     downloadUrl: appImage.url,
     debUrl: files.find((file) => file.url.endsWith('/Antigravity.deb'))?.url,
-    sha512,
-    publishedOn: lastModified ? new Date(lastModified).toISOString().slice(0, 10) : undefined,
+    // El manifiesto usa SHA-512 en base64 (formato electron-updater); se muestra en hex
+    // para poder compararlo directamente con la salida de sha512sum.
+    sha512: Buffer.from(appImage.sha512, 'base64').toString('hex'),
   };
+}
+
+// La página de descargas recibe cada versión antes que el manifiesto (que Google actualiza
+// días después). Enlaza el .tar.gz, y el AppImage y el .deb viven en la misma carpeta.
+async function fetchDownloadPageBuild(): Promise<{ version: string; baseUrl: string } | undefined> {
+  try {
+    const response = await fetch(DOWNLOAD_PAGE_URL, { headers: { 'User-Agent': USER_AGENT } });
+    if (!response.ok) return undefined;
+    const match = (await response.text()).match(
+      /(https:\/\/storage\.googleapis\.com\/antigravity-public\/antigravity-hub\/(\d+\.\d+\.\d+)-\d+\/linux-x64)\/Antigravity\.tar\.gz/,
+    );
+    return match ? { version: match[2], baseUrl: match[1] } : undefined;
+  } catch {
+    // La página es una fuente secundaria: si falla, el manifiesto sigue siendo válido.
+    return undefined;
+  }
+}
+
+async function sha512OfUrl(url: string): Promise<string> {
+  const { createHash } = await import('node:crypto');
+  const response = await fetch(url);
+  if (!response.ok || !response.body) throw new Error(`Could not download ${url} (${response.status})`);
+  const hash = createHash('sha512');
+  for await (const chunk of response.body) hash.update(chunk);
+  return hash.digest('hex');
+}
+
+async function lastModifiedOf(url: string): Promise<string | undefined> {
+  const head = await fetch(url, { method: 'HEAD' });
+  if (!head.ok) return undefined;
+  const lastModified = head.headers.get('last-modified');
+  return lastModified ? new Date(lastModified).toISOString().slice(0, 10) : '';
+}
+
+async function fetchOfficialAppImage(): Promise<OfficialAppImage> {
+  const [manifest, pageBuild] = await Promise.all([fetchManifest(), fetchDownloadPageBuild()]);
+
+  if (pageBuild && compareVersions(pageBuild.version, manifest.version) > 0) {
+    const downloadUrl = `${pageBuild.baseUrl}/Antigravity.AppImage`;
+    const publishedOn = await lastModifiedOf(downloadUrl);
+    if (publishedOn !== undefined) {
+      const debUrl = `${pageBuild.baseUrl}/Antigravity.deb`;
+      return {
+        version: pageBuild.version,
+        downloadUrl,
+        debUrl: (await lastModifiedOf(debUrl)) !== undefined ? debUrl : undefined,
+        sha512: await sha512OfUrl(downloadUrl),
+        sha512IsOfficial: false,
+        publishedOn: publishedOn || undefined,
+      };
+    }
+  }
+
+  const publishedOn = await lastModifiedOf(manifest.downloadUrl);
+  if (publishedOn === undefined) throw new Error('The official AppImage is not reachable');
+  return { ...manifest, sha512IsOfficial: true, publishedOn: publishedOn || undefined };
 }
 
 const v2Release = await fetchOfficialAppImage();
@@ -166,7 +227,9 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
                 <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
                 </svg>
-                <span data-i18n="sha512-label">Official SHA-512 Checksum</span>
+                {v2Release.sha512IsOfficial
+                  ? <span data-i18n="sha512-label">Official SHA-512 Checksum</span>
+                  : <span data-i18n="sha512-computed-label">SHA-512 Checksum (computed from Google's file)</span>}
               </span>
               <button 
                 data-copy="sha512-v2" 
@@ -187,7 +250,7 @@ const ideRelease = await fetchLatestRelease('Mate-Logic/AntigravityIDE-AppImage'
           <details class="bg-[#090710] border border-purple-950/80 p-3 rounded-xl font-sans group/source">
             <summary class="text-[11px] text-purple-300 font-semibold cursor-pointer select-none" data-i18n="v2-source-title">Where does this link come from?</summary>
             <p class="text-[11px] text-zinc-400 leading-relaxed mt-2" data-i18n="v2-source-desc">
-              Google doesn't list this AppImage on its download page. It is published in the auto-update manifest that the Antigravity app itself checks (referenced in resources/app-update.yml inside the official .tar.gz). This site reads that manifest on every build, so the link always points to Google's latest version.
+              Google doesn't list this AppImage on its download page. It is published in the auto-update manifest that the Antigravity app itself checks (referenced in resources/app-update.yml inside the official .tar.gz). This site reads that manifest and Google's download page on every build, so the link always points to Google's latest version.
             </p>
             <a href={HUB_MANIFEST_URL} class="inline-block text-[11px] text-purple-400 hover:text-purple-300 underline mt-2" target="_blank" rel="noopener noreferrer" data-i18n="v2-source-link">View the official manifest</a>
           </details>
